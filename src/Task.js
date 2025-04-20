@@ -1,4 +1,4 @@
-class Task {
+export class Task {
     #id;
     #title;
     #description;
@@ -22,6 +22,7 @@ class Task {
         return this.#id;
     }
 
+    // Setter for id
     set id(value) {
         throw new Error("ID is read-only and cannot be modified");
     }
@@ -33,6 +34,9 @@ class Task {
 
     // Setter for title
     set title(value) {
+        if (typeof value !== "string" || value.trim() === "") {
+            throw new Error("Title must be a non-empty string");
+        }
         this.#title = value;
     }
 
@@ -43,6 +47,9 @@ class Task {
 
     // Setter for description
     set description(value) {
+        if (typeof value !== "string") {
+            throw new Error("Description must be a string");
+        }
         this.#description = value;
     }
 
@@ -53,6 +60,9 @@ class Task {
 
     // Setter for status
     set status(value) {
+        if (!["Pending", "Completed"].includes(value)) {
+            throw new Error("Status must be Pending or Completed");
+        }
         this.#status = value;
     }
 
@@ -63,6 +73,9 @@ class Task {
 
     // Setter for dueDate
     set dueDate(value) {
+        if (!(value instanceof Date) || isNaN(value)) {
+            throw new Error("Invalid date");
+        }
         this.#dueDate = value;
     }
 
@@ -73,6 +86,9 @@ class Task {
 
     // Setter for priority
     set priority(value) {
+        if (!Number.isInteger(value) || value < 1 || value > 5) {
+            throw new Error("Priority must be an integer between 1 and 5");
+        }
         this.#priority = value;
     }
 
@@ -83,6 +99,7 @@ class Task {
 
     // Setter for projectId
     set projectId(value) {
+        // Validation requires projectList from todoApp; handle there
         this.#projectId = value;
     }
 }

@@ -1,6 +1,6 @@
 import { getRandomColor } from "./colors.js";
 
-class Project {
+export class Project {
     #id;
     #name;
     #description;
