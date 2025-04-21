@@ -1,3 +1,4 @@
+import { PROJECT_KEY, TASK_KEY } from "./constants.js";
 import { Project } from "./Project.js";
 import { Task } from "./Task.js";
 
@@ -38,12 +39,12 @@ export function loadFromStorage(key) {
         const json = localStorage.getItem(key);
         const objList = JSON.parse(json);
 
-        if (key === "task") {
+        if (key === TASK_KEY) {
             const taskList = objList.map(t => 
                 new Task(t.title, t.description, t.status, new Date(t.dueDate), t.priority, t.projectId)
             );
             return taskList;
-        } else if (key === "project") {
+        } else if (key === PROJECT_KEY) {
             const projectList = objList.map(p =>
                 new Project(p._name, p._description)
             );

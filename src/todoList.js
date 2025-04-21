@@ -2,7 +2,7 @@ import { Project } from "./Project.js";
 import { Task } from "./Task.js";
 import { loadFromStorage } from "./storage.js";
 
-class todoList {
+class TodoList {
     #taskList = [];
     #projectList = [];
 
@@ -26,6 +26,9 @@ class todoList {
         // TODO: update localStorage
 
         // TODO: refresh UI
+
+        // TODO: should I just return project id ?
+        return project;
     }
 
     removeProject(projectId) {
@@ -67,3 +70,5 @@ class todoList {
         // TODO: refresh UI
     }
 }
+
+export const todoList = new TodoList();

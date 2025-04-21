@@ -17,7 +17,7 @@
     - function to delete Projects
     - funciton to add / update / delete Tasks
     - functions to generate today and upcoming tasks
-- fix the date stuff
+- fix the date stuff in tasks - use proper formats
 
 - better UI
     - icons all, inbox, today, upcoming
@@ -31,3 +31,6 @@
     - project color
 
 - webpack dev and prod setup
+
+### Immediate next steps
+-> render Task list -> handle project, today, upcoming, all

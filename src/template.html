@@ -28,7 +28,7 @@
                 <button class="create-project">+ Project</button>
             </div>
         </aside>
-        <main>
+        <main class="task-list">
             <div class="task-container">
                 <input type="checkbox" name="status" id="status">
                 <span>Clean Chimney</span>
@@ -60,7 +60,7 @@
                 <form action="" class="task-form">
                     <button class="close" type="button">×</button>
                     <input type="text" name="title" id="title" placeholder="Task title goes here">
-                    <textarea name="description" id="description" placeholder="Task details go here"></textarea>
+                    <textarea name="task-description" id="task-description" placeholder="Task details go here"></textarea>
                     <p class="priority">
                         <label for="">Priotity:</label>
                         <input type="radio" name="low" id="low" value="low">
@@ -90,7 +90,7 @@
                 <form action="" class="project-form">
                     <button class="close" type="button">×</button>
                     <input type="text" name="name" id="name" placeholder="Project name goes here">
-                    <textarea name="description" id="description" placeholder="Project details go here"></textarea>
+                    <textarea name="project-description" id="project-description" placeholder="Project details go here"></textarea>
                     <button class="project-submit">Create Project</button>
                 </form>
             </div>
