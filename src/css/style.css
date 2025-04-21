@@ -27,10 +27,34 @@ header {
     grid-area: header;
     background-color: var(--header-background);
     padding: 30px;
-    display: grid;
+    display: flex;
     align-content: center;
-    font-size: 3rem;
+    justify-content: space-between;
+    font-size: 1rem;
     font-weight: bold;
+}
+
+header h2 {
+    font-size: 2rem;
+    font-family: 'Coves';
+}
+
+header .create-new-task {
+    margin-right: 10px;
+
+    height: 3rem;
+    width: 3rem;
+    border-radius: 50%;
+
+    font-size: 2rem;
+    line-height: 1rem;
+    
+    display: grid;
+    place-content: center;
+
+    border: none;
+    background-color: rgb(148, 255, 239);
+    
 }
 
 /* Aside */
@@ -86,7 +110,7 @@ main {
 }
 
 main .task-container {
-    background-color: rgba(154, 46, 255, 0.789);
+    background-color: rgba(136, 8, 255, 0.789);
     border-radius: 5px;
     height: 60px;
 
@@ -110,4 +134,143 @@ main .task-container button {
     background: none;
     padding: 5px 10px;
     border-radius: 7px;
+}
+
+
+/* Forms and dialog */
+
+form.task-form {
+    border: 2px solid pink;
+    width: 40rem;
+    height: auto;
+    position: relative;
+
+    display: grid;
+    gap: 20px;
+    justify-content:stretch;
+    justify-items: start;
+
+    padding: 15px;
+}
+
+button.close {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.7rem;
+    line-height: 1rem;
+    padding: 0;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+
+    cursor: pointer;
+    color: white;
+}
+
+.task-form input#title {
+    height: 3rem;
+    width: 95%;
+    padding-left: 1rem;
+    background: rgba(255, 255, 255, 0.186);
+    border: none;
+    outline: none;
+
+    color: white;
+    font-size: 1.3rem;
+}
+
+.task-form textarea {
+    height: 10rem;
+    width: 95%;
+    padding: 1rem;
+    resize: none;
+    background: rgba(255, 255, 255, 0.186);
+    border: none;
+    outline: none;
+
+    color: white;
+    font-size: 1rem;
+}
+
+form ::placeholder {
+    color: rgb(148, 109, 146);
+}
+
+.task-form .task-submit {
+    background: none;
+    color: pink;
+    border: 2px solid pink;
+    justify-self: center;
+    padding: 5px 15px;
+    border-radius: 5px;
+}
+
+
+/*project form*/
+
+form.project-form {
+    border: 2px solid pink;
+    width: 40rem;
+    height: auto;
+    position: relative;
+
+    display: grid;
+    gap: 20px;
+    justify-content:stretch;
+    justify-items: start;
+
+    padding: 15px;
+}
+
+button.close {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.7rem;
+    line-height: 1rem;
+    padding: 0;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+
+    cursor: pointer;
+    color: white;
+}
+
+.project-form input#name {
+    height: 3rem;
+    width: 95%;
+    padding-left: 1rem;
+    background: rgba(255, 255, 255, 0.186);
+    border: none;
+    outline: none;
+
+    color: white;
+    font-size: 1.3rem;
+}
+
+.project-form textarea {
+    height: 10rem;
+    width: 95%;
+    padding: 1rem;
+    resize: none;
+    background: rgba(255, 255, 255, 0.186);
+    border: none;
+    outline: none;
+
+    color: white;
+    font-size: 1rem;
+}
+
+form ::placeholder {
+    color: rgb(148, 109, 146);
+}
+
+
+.project-form .project-submit {
+    background: none;
+    color: pink;
+    border: 2px solid pink;
+    justify-self: center;
+    padding: 5px 15px;
+    border-radius: 5px;
 }
