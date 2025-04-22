@@ -274,3 +274,11 @@ form ::placeholder {
     padding: 5px 15px;
     border-radius: 5px;
 }
+
+
+dialog {
+    background-color: var(--main-background);
+    color: white;
+    border:none;
+    margin: auto;
+}

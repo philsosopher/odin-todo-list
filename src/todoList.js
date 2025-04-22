@@ -69,6 +69,10 @@ class TodoList {
 
         // TODO: refresh UI
     }
+
+    removeTask(taskId) {
+        this.#taskList = this.#taskList.filter(t => t.id !== taskId);
+    }
 }
 
 export const todoList = new TodoList();

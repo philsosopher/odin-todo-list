@@ -1,3 +1,5 @@
 import './css/style.css';
+import { ui } from "./UI.js";
 
-console.log("Hey");
+// Initialize app (UI class handles everything)
+// ui.loadAndRender();

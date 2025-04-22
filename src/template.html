@@ -55,48 +55,48 @@
                     <button class="edit">Edit</button>
                     <button class="delete">Delete</button>
                 </div>
-            </div>
-            <div class="task-form-dialog">
-                <form action="" class="task-form">
-                    <button class="close" type="button">×</button>
-                    <input type="text" name="title" id="title" placeholder="Task title goes here">
-                    <textarea name="task-description" id="task-description" placeholder="Task details go here"></textarea>
-                    <p class="priority">
-                        <label for="">Priotity:</label>
-                        <input type="radio" name="low" id="low" value="low">
-                        <label for="">Low</label>
-                        <input type="radio" name="medium" id="medium" value="medium">
-                        <label for="">Medium</label>
-                        <input type="radio" name="high" id="high" value="high">
-                        <label for="">High</label>
-                    </p>
-                    <p class="task-due-date">
-                        <label for="due-date">Due Date:</label>
-                        <input type="date" name="due-date" id="due-date">
-                    </p>
-                    <p class="task-project">
-                        <label for="task-project-select">Project:</label>
-                        <select name="task-project-select" id="task-project-select">
-                            <option value="inbox-id">Inbox</option>
-                            <option value="inbox-id">Inbox</option>
-                            <option value="inbox-id">Inbox</option>
-                        </select>
-                    </p>
-                    <button class="task-submit">Add Task</button>
-
-                </form>
-            </div>
-            <div class="project-form-dialog">
-                <form action="" class="project-form">
-                    <button class="close" type="button">×</button>
-                    <input type="text" name="name" id="name" placeholder="Project name goes here">
-                    <textarea name="project-description" id="project-description" placeholder="Project details go here"></textarea>
-                    <button class="project-submit">Create Project</button>
-                </form>
-            </div>
+            </div> 
         </main>
         <!-- <footer>Developed with ♥ by Utkarsh Singh</footer> -->
     </div>
+    <dialog class="task-form-dialog">
+        <form action="" class="task-form">
+            <button class="close" type="button">×</button>
+            <input type="text" name="title" id="title" placeholder="Task title goes here">
+            <textarea name="task-description" id="task-description" placeholder="Task details go here"></textarea>
+            <p class="priority">
+                <label for="">Priotity:</label>
+                <input type="radio" name="low" id="low" value="low">
+                <label for="">Low</label>
+                <input type="radio" name="medium" id="medium" value="medium">
+                <label for="">Medium</label>
+                <input type="radio" name="high" id="high" value="high">
+                <label for="">High</label>
+            </p>
+            <p class="task-due-date">
+                <label for="due-date">Due Date:</label>
+                <input type="date" name="due-date" id="due-date">
+            </p>
+            <p class="task-project">
+                <label for="task-project-select">Project:</label>
+                <select name="task-project-select" id="task-project-select">
+                    <option value="inbox-id">Inbox</option>
+                    <option value="inbox-id">Inbox</option>
+                    <option value="inbox-id">Inbox</option>
+                </select>
+            </p>
+            <button class="task-submit">Add Task</button>
+
+        </form>
+    </dialog>
+    <dialog class="project-form-dialog">
+        <form action="" class="project-form">
+            <button class="close" type="button">×</button>
+            <input type="text" name="name" id="name" placeholder="Project name goes here">
+            <textarea name="project-description" id="project-description" placeholder="Project details go here"></textarea>
+            <button class="project-submit">Create Project</button>
+        </form>
+    </dialog>
 </body>
 
 </html>

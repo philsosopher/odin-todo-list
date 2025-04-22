@@ -73,10 +73,11 @@ export class Task {
 
     // Setter for dueDate
     set dueDate(value) {
-        if (!(value instanceof Date) || isNaN(value)) {
+        const date = value instanceof Date ? value : new Date(value);
+        if (isNaN(date)) {
             throw new Error("Invalid date");
         }
-        this.#dueDate = value;
+        this.#dueDate = date;
     }
 
     // Getter for priority
