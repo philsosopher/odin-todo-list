@@ -37,11 +37,11 @@
 <!-- -> better way to export and improt so many constants :done: -->
 <!-- -> method to create Task DOM and attach onclick listeners -->
 <!-- -> methods to delete tasks and projects -->
--> onclick listener definitions for task buttons
+-> **onclick listener definitions for task buttons**
     -> edit button
-        -> html - dialog and form
-        -> read task and update form
-        -> eventListener to update button
+        <!-- -> html - dialog and form -->
+        <!-- -> read task and update form -->
+        <!-- -> eventListener to update button -->
     -> details button
         -> html - dialog and form (make it uneditable)
         -> edit button to allow editing ?
@@ -54,4 +54,12 @@
 -> delete project mechanism
     -> UI
     -> methods
--> task create form and other forms should have project list proper
+<!-- -> task create form and other forms should have project list proper -->
+-> try all functionality one by one and figure out what's missing
+-> UI of clicking on aside tabs
+    -> feedback on click
+    -> show selected tab
+
+-> Fix project list load on aside
+<!-- continue the edit button listener -->
+debug issue with double edit

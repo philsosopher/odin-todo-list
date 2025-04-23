@@ -58,4 +58,14 @@ export class Project {
     set color(value) {
         this.#color = value;
     }
+
+        // Custom serialization method - required by JSON.stringify as fields are private
+        toJSON() {
+            return {
+                id: this.#id,
+                name: this.#name,
+                description: this.#description,
+                color: this.#color
+            };
+        }
 }

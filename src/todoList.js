@@ -1,5 +1,6 @@
 import { Project } from "./Project.js";
 import { Task } from "./Task.js";
+import { PROJECT_STORAGE_KEY, TASK_STORAGE_KEY } from "./constants.js";
 import { loadFromStorage } from "./storage.js";
 
 class TodoList {
@@ -7,8 +8,8 @@ class TodoList {
     #projectList = [];
 
     constructor() {
-        this.#taskList = loadFromStorage("task") || [];
-        this.#projectList = loadFromStorage("project") || [];
+        this.#taskList = loadFromStorage(TASK_STORAGE_KEY) || [];
+        this.#projectList = loadFromStorage(PROJECT_STORAGE_KEY) || [];
     }
 
     get taskList() {

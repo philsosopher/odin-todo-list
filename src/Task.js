@@ -1,3 +1,5 @@
+import { HIGH, LOW, MEDIUM } from "./constants";
+
 export class Task {
     #id;
     #title;
@@ -87,8 +89,8 @@ export class Task {
 
     // Setter for priority
     set priority(value) {
-        if (!Number.isInteger(value) || value < 1 || value > 5) {
-            throw new Error("Priority must be an integer between 1 and 5");
+        if (![LOW, MEDIUM, HIGH].includes(value)) {
+            throw new Error("Incorrect value for task.prioirty");
         }
         this.#priority = value;
     }
@@ -102,5 +104,18 @@ export class Task {
     set projectId(value) {
         // Validation requires projectList from todoApp; handle there
         this.#projectId = value;
+    }
+
+    // Custom serialization method - required by JSON.stringify as fields are private
+    toJSON() {
+        return {
+            id: this.#id,
+            title: this.#title,
+            description: this.#description,
+            status: this.#status,
+            dueDate: this.#dueDate,
+            priority: this.#priority,
+            projectId: this.#projectId
+        };
     }
 }

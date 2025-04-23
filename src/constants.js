@@ -19,3 +19,18 @@ export const INBOX = "inbox";
 export const TODAY = "today";
 export const UPCOMING = "upcoming";
 export const PROJECT = "project";
+
+/**
+ * strings
+ */
+export const ADD_TASK = "Add Task";
+export const CREATE = "Create";
+export const UPDATE_TASK = "Update Task";
+export const UPDATE = "Update";
+
+/**
+ * Task priority
+ */
+export const LOW = "low";
+export const MEDIUM = "medium";
+export const HIGH = "high";

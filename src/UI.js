@@ -1,4 +1,4 @@
-import { ALL, COMPLETED, INBOX, PENDING, PROJECT, PROJECT_STORAGE_KEY, TASK_STORAGE_KEY, TODAY, UPCOMING } from "./constants.js";
+import { ADD_TASK, ALL, COMPLETED, CREATE, INBOX, PENDING, PROJECT, PROJECT_STORAGE_KEY, TASK_STORAGE_KEY, TODAY, UPCOMING, UPDATE, UPDATE_TASK } from "./constants.js";
 import { saveToLocalStorage } from "./storage.js";
 import { todoList } from "./todoList.js";
 
@@ -15,6 +15,8 @@ class UI {
     projectForm;
     taskCreateDialog;
     projectCreateDialog;
+    taskDialogCloseButton;
+    projectDialogCloseButton;
 
     inboxProject;           // inbox project object
     currentSelectedProject; // currently selected project
@@ -31,14 +33,19 @@ class UI {
         this.projectForm = document.querySelector("form.project-form");
         this.taskCreateDialog = document.querySelector(".task-form-dialog");
         this.projectCreateDialog = document.querySelector(".project-form-dialog");
+        this.taskDialogCloseButton = document.querySelector(".task-form button.close");
+        this.projectDialogCloseButton = document.querySelector(".project-form button.close");
 
         // create default project - inbox
-        this.inboxProject = todoList.addProject("inbox", "Default project for tasks.");
+        this.inboxProject = todoList.addProject("Inbox", "Default project for tasks.");
         this.currentSelectedProject = null;
 
         this.setupDomEvents();
 
-        // render "All" task section by default
+        // init projects
+        this.renderProjectList();
+
+        // init tasks - render "All" task section by default
         this.allButton.click();
 
     }
@@ -46,6 +53,14 @@ class UI {
     // Function to register all DOM listen events
     setupDomEvents() {
         this.createTaskButton.addEventListener("click", () => {
+            // update project list in dropdown
+            this.updateProjectDropDown();
+
+            // set submit button to "Add Task"
+            const submitButton = this.taskForm.querySelector(".task-submit");
+            submitButton.innerText = ADD_TASK;
+            submitButton.dataset.operation = CREATE;
+
             this.taskCreateDialog.showModal();
         });
 
@@ -54,6 +69,7 @@ class UI {
         });
 
         this.allButton.addEventListener("click", () => {
+            console.log(todoList.taskList);
             this.currentSelectedTab = ALL;
             this.currentSelectedProject = null;
             this.renderTaskList(this.filterTaskList());
@@ -66,24 +82,34 @@ class UI {
         });
 
         this.todayButton.addEventListener("click", () => {
-            this.renderTaskList(todoList.taskList.filter(t => {
-                this.currentSelectedTab = TODAY;
-                this.currentSelectedProject = null;
-                this.renderTaskList(this.filterTaskList())
-            }));
+            this.currentSelectedTab = TODAY;
+            this.currentSelectedProject = null;
+            this.renderTaskList(this.filterTaskList());
         });
 
         this.upcomingButton.addEventListener("click", () => {
-            this.renderTaskList(todoList.taskList.filter(t => {
-                this.currentSelectedTab = UPCOMING;
-                this.currentSelectedProject = null;
-                this.renderTaskList(this.filterTaskList())
-            }));
+            this.currentSelectedTab = UPCOMING;
+            this.currentSelectedProject = null;
+            this.renderTaskList(this.filterTaskList());
         });
 
         this.taskForm.addEventListener("submit", this.handleTaskCreation.bind(this));
 
-        this.projectForm.addEventListener("submit", thishandleProjectCreation);
+        this.projectForm.addEventListener("submit", this.handleProjectCreation.bind(this));
+
+        this.taskDialogCloseButton.addEventListener("click", () => {
+            this.taskForm.reset();
+            this.taskCreateDialog.close();
+        });
+
+        this.projectDialogCloseButton.addEventListener("click", () => {
+            this.projectForm.reset();
+            this.projectCreateDialog.close();
+        });
+    }
+
+    initProjects() {
+
     }
 
     /**
@@ -97,9 +123,11 @@ class UI {
         } else if (this.currentSelectedTab === TODAY) {
             const today = new Date();
             today.setHours(0, 0, 0, 0); // Normalize to midnight - like floor()
+            console.log(today);
             return todoList.taskList.filter(t => {
                 const dueDateCopy = new Date(t.dueDate);
                 dueDateCopy.setHours(0, 0, 0, 0);
+                console.log(dueDateCopy);
 
                 return dueDateCopy.getTime() === today.getTime();
             });
@@ -187,19 +215,19 @@ class UI {
         detailsButton.addEventListener("click", (event) => {
             const taskContainer = event.target.closest(".task-container");
             const taskId = taskContainer.dataset.taskId;
-            showTaskDetails(taskId);
+            this.showTaskDetails(taskId);
         });
 
         editButton.addEventListener("click", (event) => {
             const taskContainer = event.target.closest(".task-container");
             const taskId = taskContainer.dataset.taskId;
-            showEditTaskDialog(taskId);
+            this.showEditTaskDialog(taskId);
         });
 
         deleteButton.addEventListener("click", (event) => {
             const taskContainer = event.target.closest(".task-container");
             const taskId = taskContainer.dataset.taskId;
-            handleTaskDeletion(taskId);
+            this.handleTaskDeletion(taskId);
         });
 
 
@@ -208,7 +236,7 @@ class UI {
 
     // clears and renders the Project List
     renderProjectList() {
-        const projectListContainer = document.querySelector(".projects.project-list");
+        const projectListContainer = document.querySelector(".projects .project-list");
 
         // clear container
         projectListContainer.innerHTML = "";
@@ -231,6 +259,7 @@ class UI {
     }
 
     // handles creation of Task when user creates a new task using the task form
+    // also handles updation of task - Edit task
     handleTaskCreation(event) {
         event.preventDefault(); // prevent default action of form sending data to server
 
@@ -243,14 +272,33 @@ class UI {
         const dueDate = document.querySelector('#due-date').value;
         const projectId = document.querySelector('#task-project-select').value;
 
-        // add task to task list
-        todoList.addTask(title, description, PENDING, dueDate, priority, projectId);
+        // determine if it is create or update call
+        const submitButton = this.taskForm.querySelector(".task-submit");
+        const operation = submitButton.dataset.operation;
+
+        if (operation === CREATE) {
+            // add task to task list
+            todoList.addTask(title, description, PENDING, dueDate, priority, projectId);
+        } else if (operation === UPDATE) {
+            const taskIndex = todoList.taskList.findIndex(t => t.id === submitButton.dataset.taskId);
+            todoList.taskList[taskIndex] = {
+                ...todoList.taskList[taskIndex],
+                title,
+                description,
+                dueDate,
+                priority,
+                projectId
+            };
+        }
 
         // update local storage
         saveToLocalStorage(TASK_STORAGE_KEY, todoList.taskList);
 
         // render task list again
         this.renderTaskList(this.filterTaskList());
+
+        this.taskForm.reset();
+        this.taskCreateDialog.close();
     }
 
     // handles deletion of task 
@@ -278,10 +326,13 @@ class UI {
         todoList.addProject(name, description);
 
         // update local storage
-        saveToLocalStorage(PROJECT_STORAGE_KEY, todoList.taskList);
+        saveToLocalStorage(PROJECT_STORAGE_KEY, todoList.projectList);
 
         // render Project List again
         this.renderProjectList(this.filterTaskList());
+
+        this.projectForm.reset();
+        this.projectCreateDialog.close();
     }
 
 
@@ -294,6 +345,48 @@ class UI {
     // given task.id, displays edit dialog for that task
     showEditTaskDialog(taskId) {
 
+        // get the task
+        const task = todoList.taskList.find(t => t.id === taskId);
+
+        // prepare the form
+
+        // update project list in dropdown
+        this.updateProjectDropDown();
+
+        // set submit button to "Update Task"
+        const submitButton = this.taskForm.querySelector(".task-submit");
+        submitButton.innerText = UPDATE_TASK;
+        submitButton.dataset.operation = UPDATE;
+        submitButton.dataset.taskId = taskId;
+
+        // Populate form fields with task data
+        document.querySelector('#title').value = task.title;
+        document.querySelector('#task-description').value = task.description;
+
+        // Select the option in the dropdown where value matches task.projectId
+        document.querySelector('#task-project-select').value = task.projectId;
+
+        // Format dueDate (Date object) to YYYY-MM-DD for date input - toISOString() gives something like "2025-04-22T13:00:00.000Z"
+        document.querySelector('#due-date').value = task.dueDate.toISOString().split('T')[0];
+
+        // Set priority radio button (low, medium, high)
+        const priorityRadio = document.querySelector(`input[name="priority"][value="${task.priority.toLowerCase()}"]`);
+        priorityRadio.checked = true;
+
+        this.taskCreateDialog.showModal();
+    }
+
+    // updates the task form Project Drop Down with latest projects
+    updateProjectDropDown() {
+        // add latest project options to the project drop down
+        const projectDropDown = document.querySelector('#task-project-select');
+        projectDropDown.innerHTML = "";
+        todoList.projectList.forEach(p => {
+            const projectOption = document.createElement("option");
+            projectOption.innerText = p.name;
+            projectOption.value = p.id;
+            projectDropDown.appendChild(projectOption);
+        });
     }
 }
 
